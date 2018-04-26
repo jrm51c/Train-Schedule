@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Train Schedule</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
@@ -12,13 +12,16 @@
     <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css" />
     <!-- jQuery library CDN -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Firebase reference-->
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+    <!-- Moment.js -->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     <!-- link to external javascript -->
     <script src="./assets/javascript/trainSchedule.js"></script>
 </head>
 
 <body>
     <div id="container">
-        <!-- Jumbotron for Title -->
         <div class="jumbotron" style="background-color: #20315A ; color: white;">
             <h1 class="text-center">
                 <strong>
@@ -26,21 +29,14 @@
                 </strong>
             </h1>
         </div>
-        <!-- This row will handle all of the retrieved train schedules -->
         <div class="row">
             <div class="col-sm-12">
                 <br>
-    
-                <!-- This panel will initially be made up of a panel and wells for each of the train schedules retrieved -->
                 <div class="card">
-    
-                    <!-- Panel Heading for the retrieved articles box -->
                     <div class="card-header" style="background-color: #20315A ; color: white;">
                         <strong>
                             <i class="fa fa-table"></i>Current Train Schedule</strong>
                     </div>
-    
-                    <!-- This main panel will hold each of the resulting articles -->
                     <div class="card-body" id="schedule-section">
                         <table class="table table-striped">
                             <thead>
@@ -53,64 +49,53 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Insert movie rows here -->
+                                <!-- Insert train schedule here -->
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Row for Searching New York Times -->
         <div class="row">
             <div class="col-sm-12">
                 <br>
-                <!-- First panel is for handling the search parameters -->
                 <div class="card">
                     <div class="card-header" style="background-color: #20315A ; color: white;">
                         <strong>
                             <i class="fa fa-list-alt"></i>Add a Train</strong>
                     </div>
                     <div class="card-body" id="schedule-input">
-    
-                        <!-- Here we create an HTML Form for handling the inputs-->
                         <form role="form">
-    
-                            <!-- Here we create the text box for capturing the search term-->
                             <div class="form-group">
-                                <label for="train-name">Train Name:</label>
+                                <label for="train-name">Train Name</label>
                                 <input type="text" class="form-control" id="train-name">
                             </div>
-                            <!-- Here we capture the Start Year Parameter-->
                             <div class="form-group">
-                                <label for="destination">Destination:</label>
+                                <label for="destination">Destination</label>
                                 <input type="text" class="form-control" id="destination">
                             </div>
-    
-                            <!-- Here we capture the Start Year Parameter-->
                             <div class="form-group">
-                                <label for="initial-time">Initial Train Time:</label>
-                                <input type="text" class="form-control" id="initial-time">
+                                <label for="initial-time">Initial Train Time (HH:mm - military time)</label>
+                                <input type="time" class="form-control" id="initial-time">
                             </div>
-    
-                            <!-- Here we capture the End Year Parameter -->
                             <div class="form-group">
                                 <label for="frequency">Frequency (min):</label>
                                 <input type="text" class="form-control" id="frequency">
                             </div>
-    
-                            <!-- Here we have our final submit button -->
                             <button type="submit" class="btn btn-default" id="add-train" style="background-color: #20315A ; color: white;">
-                                <!--<i class="fa fa-search">--></i>Add Train</button>
+                                Add Train
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    
-    
-    
+
+
+
     </div>
 
 </body>
 .
+
 </html>
