@@ -1,12 +1,6 @@
 $(document).ready(function () {
   // variables
   //=============================================================================================
-  //var train;
-  //var destination;
-  //var initialTime;
-  //var frequency;
-  //var nextArrival;
-  //var minutesAway;
 
   /* global moment firebase */
 
@@ -38,6 +32,7 @@ $(document).ready(function () {
     // Build table
     var tBody = $("tbody");
     var tRow = $("<tr>");
+    var tButton = $("<td>")
     var tName = $("<td>").text(childSnapshot.val().train);
     var tDestination = $("<td>").text(childSnapshot.val().destination);
     var tFrequency = $("<td>").text(childSnapshot.val().frequency);
@@ -45,10 +40,7 @@ $(document).ready(function () {
     var tFrequency2 = childSnapshot.val().frequency;
     // Calculate next arrival and minutes away
     var calculatedArrivalsTime = calculateArrival(tInitialTime, tFrequency2);
-    //click button delete function
-
-
-  
+    //click button delete function will go here
     var tNextArrival = $("<td>").text(moment(calculatedArrivalsTime.nextArrival).format("HH:mm a"));
     var tMinutesAway = $("<td>").text(calculatedArrivalsTime.minutesAway);
     
@@ -105,9 +97,6 @@ function calculateArrival(initialTime, frequency) {
   var minutesAway = frequency - remainderTime;
   // Next Train
   var nextArrival = moment().add(minutesAway, "minutes");
-  console.log("minutesaway" + minutesAway);
-  console.log("freq" + frequency);
-  console.log("rem" + remainderTime);
   return {
     minutesAway,
     nextArrival
