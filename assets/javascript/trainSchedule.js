@@ -1,12 +1,12 @@
 $(document).ready(function () {
   // variables
   //=============================================================================================
-  var train;
-  var destination;
-  var initialTime;
-  var frequency;
-  var nextArrival;
-  var minutesAway;
+  //var train;
+  //var destination;
+  //var initialTime;
+  //var frequency;
+  //var nextArrival;
+  //var minutesAway;
 
   /* global moment firebase */
 
@@ -33,8 +33,7 @@ $(document).ready(function () {
   // Firebase watcher + initial loader
   // Update train schedule to include new train information
   database.ref().on("child_added", function (childSnapshot) {
-    // Calculate next arrival and minutes away
-    calculateArrival();
+
 
     // Build table
     var tBody = $("tbody");
@@ -42,9 +41,17 @@ $(document).ready(function () {
     var tName = $("<td>").text(childSnapshot.val().train);
     var tDestination = $("<td>").text(childSnapshot.val().destination);
     var tFrequency = $("<td>").text(childSnapshot.val().frequency);
-    var tNextArrival = $("<td>").text(moment(nextArrival).format("HH:mm a"));
-    var tMinutesAway = $("<td>").text(minutesAway);
-    console.log("second" + nextArrival);
+    var tInitialTime = childSnapshot.val().initialTime;
+    var tFrequency2 = childSnapshot.val().frequency;
+    // Calculate next arrival and minutes away
+    var calculatedArrivalsTime = calculateArrival(tInitialTime, tFrequency2);
+    //click button delete function
+
+
+  
+    var tNextArrival = $("<td>").text(moment(calculatedArrivalsTime.nextArrival).format("HH:mm a"));
+    var tMinutesAway = $("<td>").text(calculatedArrivalsTime.minutesAway);
+    
     // Append the newly created table data to the table row
     tRow.append(tName, tDestination, tFrequency, tNextArrival, tMinutesAway);
     // Append the table row to the table body
@@ -65,10 +72,10 @@ $(document).ready(function () {
     // prevent page from refreshing when form tries to submit itself
     event.preventDefault();
     // Capture user inputs and store them into variables
-    train = $("#train-name").val().trim();
-    destination = $("#destination").val().trim();
-    initialTime = $("#initial-time").val().trim();
-    frequency = $("#frequency").val().trim();
+    var train = $("#train-name").val().trim();
+    var destination = $("#destination").val().trim();
+    var initialTime = $("#initial-time").val().trim();
+    var frequency = $("#frequency").val().trim();
     // Creates local "temporary" object for holding new train data
     var newTrain = {
       train: train,
@@ -84,7 +91,7 @@ $(document).ready(function () {
     clear();
   });
 
-function calculateArrival() {
+function calculateArrival(initialTime, frequency) {
 
   // Initial time (pushed back 1 year to make sure it comes before current time)
   var initialTimeConverted = moment(initialTime, "HH:mm").subtract(1, "years");
@@ -95,9 +102,15 @@ function calculateArrival() {
   // Time apart (remainder)
   var remainderTime = diffTime % frequency;
   // Minutes until train arrives
-  minutesAway = frequency - remainderTime;
+  var minutesAway = frequency - remainderTime;
   // Next Train
-  nextArrival = moment().add(minutesAway, "minutes");
+  var nextArrival = moment().add(minutesAway, "minutes");
+  console.log("minutesaway" + minutesAway);
+  console.log("freq" + frequency);
+  console.log("rem" + remainderTime);
+  return {
+    minutesAway,
+    nextArrival
   }
-
+  }
 });
